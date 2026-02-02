@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ساعة HUAWEI الذكية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000;
+            color: white;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+        }
+        
+        .header {
+            color: #ff0000;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 0, 0, 0.7); }
+            to { text-shadow: 0 0 30px rgba(255, 0, 0, 0.9); }
+        }
+        
+        .clock-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px 30px;
+            margin: 20px;
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            box-shadow: 0 10px 40px rgba(255, 0, 0, 0.2);
+            max-width: 800px;
+            width: 90%;
+        }
+        
+        #time {
+            font-size: 72px;
+            color: #00ffff;
+            font-weight: bold;
+            text-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
+            direction: ltr;
+            letter-spacing: 3px;
+            margin: 20px 0;
+            transition: color 0.5s;
+        }
+        
+        #date {
+            font-size: 24px;
+            color: #ffcc00;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+        
+        .features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 15px 25px;
+            border-radius: 10px;
+            min-width: 150px;
+        }
+        
+        .feature h3 {
+            color: #4df0ff;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .footer {
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 50px;
+            font-size: 14px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        @media (max-width: 768px) {
+            .header { font-size: 36px; }
+            #time { font-size: 56px; }
+            .clock-container { padding: 30px 20px; }
+        }
+        
+        @media (max-width: 480px) {
+            #time { font-size: 42px; }
+            .header { font-size: 28px; }
+            .features { flex-direction: column; }
+            .feature { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="header">HUAWEI ⏰</h1>
+    
+    <div class="clock-container">
+        <div id="time">00:00:00</div>
+        <div id="date">جاري التحميل...</div>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>🕐 الوقت الحالي</h3>
+                <div>يتحدد كل ثانية</div>
+            </div>
+            <div class="feature">
+                <h3>📅 التاريخ</h3>
+                <div>هجري/ميلادي</div>
+            </div>
+            <div class="feature">
+                <h3>📱 التصميم</h3>
+                <div>متجاوب مع جميع الشاشات</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>✨ ساعة HUAWEI الرقمية المتطورة ✨</p>
+        <p>تم التطوير باستخدام HTML5, CSS3 & JavaScript</p>
+        <p>يعمل على جميع الأجهزة والمتصفحات</p>
+    </div>
+
+    <script>
+        // تحديث الوقت والتاريخ
+        function updateTime() {
+            const now = new Date();
+            
+            // الوقت
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            document.getElementById('time').textContent = 
+                `${hours}:${minutes}:${seconds}`;
+            
+            // التاريخ العربي
+            const dateOptions = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            document.getElementById('date').textContent = 
+                now.toLocaleDateString('ar-SA', dateOptions);
+            
+            // تغيير لون الساعة حسب الوقت
+            const timeElement = document.getElementById('time');
+            const hour = parseInt(hours);
+            
+            if (hour < 6) {
+                timeElement.style.color = '#ff66ff'; // فجر
+                timeElement.style.textShadow = '0 0 25px #ff66ff';
+            } else if (hour < 12) {
+                timeElement.style.color = '#ff9900'; // صباح
+                timeElement.style.textShadow = '0 0 25px #ff9900';
+            } else if (hour < 17) {
+                timeElement.style.color = '#00ffaa'; // ظهر
+                timeElement.style.textShadow = '0 0 25px #00ffaa';
+            } else if (hour < 20) {
+                timeElement.style.color = '#00aaff'; // مساء
+                timeElement.style.textShadow = '0 0 25px #00aaff';
+            } else {
+                timeElement.style.color = '#aa66ff'; // ليل
+                timeElement.style.textShadow = '0 0 25px #aa66ff';
+            }
+        }
+        
+        // بدء التحديث
+        setInterval(updateTime, 1000);
+        updateTime();
+        
+        // معلومات إضافية
+        console.log('🚀 ساعة HUAWEI الرقمية - تم التحميل بنجاح!');
+        console.log('⏰ يتم تحديث الوقت كل ثانية');
+        console.log('📱 يعمل على جميع الأجهزة');
+    </script>
+</body>
+</html>
